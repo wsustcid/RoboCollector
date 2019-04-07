@@ -92,26 +92,31 @@ The `teleop-robot` package provides launch files for teleoperation with differen
 - For a xbox360 joystick use:
 
   ```
-  roslaunch teleop_robot xbox360_teleop.launch
+  roslaunch teleop_robot xbox_teleop.launch
   ```
 
+- For logitech rumblepad2 joystick
+
+  ```
+  roslaunch teleop_robot logitech.launch
+  ```
 
 
 ## 3. Nodes
 
 ###  3.1 Keyboard Teleop
 
- The `turtlebot_teleop_key` provides a generic keyboard teleop node.
+ The `teleop_key` provides a generic keyboard teleop node.
 
 1. Published Topics
-   -  `turtlebot_telop_keyboard/cmd_vel` ([geometry_msgs/Twist](http://docs.ros.org/api/geometry_msgs/html/msg/Twist.html)) : Outputs command velocity 
+   -  `nodename/cmd_vel` ([geometry_msgs/Twist](http://docs.ros.org/api/geometry_msgs/html/msg/Twist.html)) : Outputs command velocity 
 2. Parameters:
    -  `~scale_linear` (`double`, default: 0.5) : The amount to scale the joystick input for the command velocity output.
    - `~scale_angular` (`double`, default: 1.5): The amount to scale the joystick input for the command velocity output.
 
 ### 3.2 PS3/XBox Teleop
 
- The `turtlebot_teleop_joy` provides a generic joystick teleop node.
+ The `teleop_joy` provides a generic joystick teleop node.
 
 ####  **Subscribed Topics**
 
@@ -130,34 +135,34 @@ The `teleop-robot` package provides launch files for teleoperation with differen
   
   ```
 
-
 ####  **Published Topics**
 
- `turtlebot_telop_joystick/cmd_vel` ([geometry_msgs/Twist](http://docs.ros.org/api/geometry_msgs/html/msg/Twist.html))
+ `nodename/cmd_vel` ([geometry_msgs/Twist](http://docs.ros.org/api/geometry_msgs/html/msg/Twist.html))
 
-- Outputs 	command velocity
+- Outputs command velocity
 
 ####  **Parameters**
 
  `~scale_linear` (`double`, default: 0.5)
 
-- The 	amount to scale the joystick input for the command velocity output.
+- The amount to scale the joystick input for the command velocity output.
 
 `~scale_angular` (`double`, default: 1.5)
 
-- The 	amount to scale the joystick input for the command velocity output.
+- The amount to scale the joystick input for the command velocity output.
 
-`~axis_deadman` (`int`, default: 10)
+`~axis_deadman` (`int`, default: 4)
 
-- The 	joystick index to disables/enables the output cmd_vel message.
+- The joystick index to disables/enables the output cmd_vel message.
 
 `~axis_linear` (`int`, default: 1)
 
-- The 	joystick button index to control linear speed
+- The joystick button index to control linear speed
 
 `~axis_angular` (`int`, default: 0)
 
-- The 	joystick button index to control angular speed
+- The joystick button index to control angular speed
 
 
-  If you do not receive any errors, press the "dead man" button (see Note below) and try moving the joystick or the left-hand toggle stick on the game pad.If you are using a Logitech game pad, you must first press and hold the right index finger button before the robot will respond to the left toggle stick. This button is called the "dead man" switch since the robot will stop moving if you release it. You can edit the joystick_teleop.launch file to change the scale factors for linear and angular speed. You can also map the dead man switch to a different button. 
+
+Note: If you do not receive any errors, press the "dead man" button (see Note below) and try moving the joystick or the left-hand toggle stick on the game pad.If you are using a Logitech game pad, you must first press and hold the right index finger button before the robot will respond to the left toggle stick. This button is called the "dead man" switch since the robot will stop moving if you release it. You can edit the joystick_teleop.launch file to change the scale factors for linear and angular speed. You can also map the dead man switch to a different button. 
