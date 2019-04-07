@@ -34,10 +34,10 @@
 #include "boost/thread/thread.hpp"
 #include "ros/console.h"
 
-class TurtlebotTeleop
+class TeleopRobot
 {
 public:
-  TurtlebotTeleop();
+  TeleopRobot();
 
 private:
   void joyCallback(const sensor_msgs::Joy::ConstPtr& joy);
@@ -58,7 +58,7 @@ private:
 
 };
 
-TurtlebotTeleop::TurtlebotTeleop():
+TeleopRobot::TeleopRobot():
   ph_("~"),
   linear_(1),
   angular_(0),
@@ -76,12 +76,12 @@ TurtlebotTeleop::TurtlebotTeleop():
   zero_twist_published_ = false;
 
   vel_pub_ = ph_.advertise<geometry_msgs::Twist>("cmd_vel", 1, true);
-  joy_sub_ = nh_.subscribe<sensor_msgs::Joy>("joy", 10, &TurtlebotTeleop::joyCallback, this);
+  joy_sub_ = nh_.subscribe<sensor_msgs::Joy>("joy", 10, &TeleopRobot::joyCallback, this);
 
-  timer_ = nh_.createTimer(ros::Duration(0.1), boost::bind(&TurtlebotTeleop::publish, this));
+  timer_ = nh_.createTimer(ros::Duration(0.1), boost::bind(&TeleopRobot::publish, this));
 }
 
-void TurtlebotTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
+void TeleopRobot::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 { 
   geometry_msgs::Twist vel;
   vel.angular.z = a_scale_*joy->axes[angular_];
@@ -90,7 +90,7 @@ void TurtlebotTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
   deadman_pressed_ = joy->buttons[deadman_axis_];
 }
 
-void TurtlebotTeleop::publish()
+void TeleopRobot::publish()
 {
   boost::mutex::scoped_lock lock(publish_mutex_);
 
@@ -108,8 +108,8 @@ void TurtlebotTeleop::publish()
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "turtlebot_teleop");
-  TurtlebotTeleop turtlebot_teleop;
+  ros::init(argc, argv, "teleop_joy");
+  TeleopRobot teleop_robot;
 
   ros::spin();
 }

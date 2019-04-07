@@ -1,8 +1,12 @@
 <launch>
+  <!--
+    Push the right frontal button labeled as 'RB' to activate cmd_vel publishing.
+    Move the left stick around to control the velocity.
+   -->
   <node pkg="teleop_robot" type="teleop_joy" name="teleop_joy">
     <param name="scale_angular" value="1.5"/>
     <param name="scale_linear" value="0.5"/>
-    <param name="axis_deadman" value="10"/>
+    <param name="axis_deadman" value="5"  />
     <param name="axis_linear" value="1"/>
     <param name="axis_angular" value="0"/>
     <remap from="teleop_joy/cmd_vel" to="cmd_vel"/>

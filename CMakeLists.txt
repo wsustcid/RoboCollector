@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(turtlebot_teleop)
+project(teleop_robot)
 
 ## Find catkin macros and libraries
 find_package(catkin REQUIRED COMPONENTS roscpp geometry_msgs joy)
@@ -16,8 +16,8 @@ catkin_package(
 ## Build ##
 ###########
 
-add_executable(turtlebot_teleop_joy src/turtlebot_joy.cpp)
-target_link_libraries(turtlebot_teleop_joy ${catkin_LIBRARIES})
+add_executable(teleop_joy src/teleop_joy.cpp)
+target_link_libraries(teleop_joy ${catkin_LIBRARIES})
 
 #############
 ## Install ##
@@ -25,12 +25,12 @@ target_link_libraries(turtlebot_teleop_joy ${catkin_LIBRARIES})
 
 ## Mark executable scripts (Python etc.) for installation
 install(PROGRAMS
-  scripts/turtlebot_teleop_key
+  scripts/teleop_key
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 ## Mark executables and/or libraries for installation
-install(TARGETS turtlebot_teleop_joy
+install(TARGETS teleop_joy
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
