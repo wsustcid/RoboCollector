@@ -1,6 +1,14 @@
 # teleop-robot
 
-*This package is modified based on the [turtlebot_teleop](https://github.com/turtlebot/turtlebot/tree/kinetic/turtlebot_teleop) package.*
+This package is used to control a wheeled mobile robot such as Pioneer 3-dx via a joystick.  The throttle, brake, steering and gear used in a real car are defined on the joystick buttons to control the robot more easily rather than controlling velocity and angular velocity directly.
+
+
+
+Future work:
+
+- add Reverse gear
+
+
 
 ## 1. Preparation
 
@@ -23,7 +31,7 @@
 
    Note: 
 
-   - May be only the `ros-kinetic-joy` package is needed, which will publish the control commands created by the joystick to the `/joy` node. 
+   - May be only the `ros-kinetic-joy` package is needed, in which the `joy_node` of the `joy` package publishes the control commands of the joystick to the `/joy` topic.  Then we can subscribe to this topic to send the control message to a real robot.
 
 ### 1.3 Joystick button test
 
@@ -34,7 +42,7 @@
    jstest /dev/input/js0
    ```
 
-   Then press various buttons and look at the numbers at the bottom of the screen to see which one turns from "off" to "on". Type Ctrl-C to exit the test screen.
+   Then press each button and see which one turns from "off" to "on". Type Ctrl-C to exit the test screen.
 
 2. 北通D2
 
@@ -47,31 +55,36 @@
    Buttons:  0:off  1:off  2:off  3:off  4:off  5:off  6:off  7:off  8:off  9:off 10:off 
    ```
 
-   - left joystick - left & right: Axes 0; (left decrease, right: increase)
-
-   - left joystick - up & down: Axes 1; (up: decrease, down: increase)
-
-   - right joystick - left & right: Axes 3; (left decrease, right: increase)
-
-   - right joystick - up & down: Axes 4; (up: decrease, down: increase)
-
-   - right button - left & right: Axes 6; (left decrease, right: increase)
-
-   - right button - up & down: Axes 7; (up: decrease, down: increase)
-
-   - A: 0
-
-   - B: 1
-
+   - left joy - left & right: Axes 0; (left decrease, right: increase) [-32767,32767]
+- left joy - up & down: Axes 1; (up: decrease, down: increase) [-32767,32767]
+   - right joy - left & right: Axes 2; (left decrease, right: increase) [-32767,32767]
+- right joy - up & down: Axes 3; (up: decrease, down: increase) [-32767,32767]
+   - A: 0 (on/off)
+- B: 1
    - X: 2
-
-   - Y: 3
-
+- Y: 3
    - LB: 4
+- RB: 5
+   - LT: 6
+- RT: 7
+   - back: 8
+- start: 9
+   - logo: 10
+- left: 13
+   - right: 14
+- up: 15
+   - down: 16
 
-   - RB: 5
+### 1.4 Install tele-operate package
 
-   - logo: 8
+```
+cd ~/catkin_ws/src
+git clone https://github.com/wsustcid/teleop_robot.git
+cd ..
+catkin_make
+```
+
+
 
 ## 2. Usage
 
@@ -95,18 +108,31 @@ The `teleop-robot` package provides launch files for teleoperation with differen
   roslaunch teleop_robot xbox_teleop.launch
   ```
 
+  Keep pressing 'RB' to activate cmd_vel publishing and use the left joy to control the velocity.
+
 - For logitech rumblepad2 joystick
 
   ```
   roslaunch teleop_robot logitech.launch
   ```
 
+Usage:
+
+- LT: Brake (decrease current velocity)
+- RT: Throttle (increase current velocity)
+- LB: Disable data collection
+- RB: Enable data collection
+- left and right joy: steering (control angular velocity)
+- X: w-1 gear (set the feasible angular velocity interval into [-0.5, 0.5])
+- A: w-2 gear (set the feasible angular velocity interval into [-1, 1])
+- Y: v-1 gear (set the feasible velocity interval into [0, 0.5])
+- B: v-2 gear (set the feasible velocity interval into [0.3, 0.8])
 
 ## 3. Nodes
 
 ###  3.1 Keyboard Teleop
 
- The `teleop_key` provides a generic keyboard teleop node.
+ The `teleop_key.py` provides a generic keyboard teleop node.
 
 1. Published Topics
    -  `nodename/cmd_vel` ([geometry_msgs/Twist](http://docs.ros.org/api/geometry_msgs/html/msg/Twist.html)) : Outputs command velocity 
@@ -116,13 +142,13 @@ The `teleop-robot` package provides launch files for teleoperation with differen
 
 ### 3.2 PS3/XBox Teleop
 
- The `teleop_joy` provides a generic joystick teleop node.
+ The `teleop_joy.cpp` provides a generic joystick teleop node.
 
 ####  **Subscribed Topics**
 
  `joy` ([sensor_msgs/Joy](http://docs.ros.org/api/sensor_msgs/html/msg/Joy.html))
 
-- Listens 	to a joystick commands
+- Listens to a joystick commands
 
   ```bash
   rosmsg show sensor_msgs/Joy
