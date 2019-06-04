@@ -16,10 +16,27 @@ Future work:
 
 **北通Ｄ2无线游戏手柄－影夜版**
 
-- Pressing the logo button after plugging in the wireless receiver, then the joystick will be connected automatically and the left indicator light will be always on.
+- Pressing the logo button after plugging in the wireless receiver, then the joystick will be connected automatically and the **right indicator light is red**. 
+
+- **Switching mode:** If the left light is red, press the logo button for five second, then both the indicators will flash and press the logo button again to switch the mode of the joystick. Repeat this procedure until the right indicator light always be read.
+
 - The joystick will be disconnected if there is no actions on it, then you should press the logo button to connect the joysitick again. 
-- When there is no connections, the left and right indicators will flash. 
-- The default input port is `/dev/input/js0`
+
+- When there is no connections, the left and right indicators will flash at the same time. 
+
+- The default input port is `/dev/input/js0`. To check the input port, start the joystick driver node:
+
+  ```
+  rosrun joy joy_node
+  ```
+
+  Then the node output will be
+
+  ```
+  [ INFO] [1559655674.176164519]: Opened joystick: /dev/input/js0. deadzone_: 0.050000.
+  ```
+
+  
 
 ### 1.2 Joystick Driver
 
@@ -48,32 +65,36 @@ Future work:
 
    ```bash
    Driver version is 2.1.0.
-   Joystick (Microsoft X-Box 360 pad) has 8 axes (X, Y, Z, Rx, Ry, Rz, Hat0X, Hat0Y)
-   and 11 buttons (BtnX, BtnY, BtnTL, BtnTR, BtnTR2, BtnSelect, BtnThumbL, BtnThumbR, ?, ?, ?).
+   Driver version is 2.1.0.
+   Joystick (BETOP CONTROLLER) has 6 axes (X, Y, Z, Rz, Hat0X, Hat0Y)
+   and 12 buttons (BtnX, BtnY, BtnZ, BtnTL, BtnTR, BtnTL2, BtnTR2, BtnSelect, BtnStart, BtnMode, BtnThumbL, BtnThumbR).
    Testing ... (interrupt to exit)
-   Axes:  0:  0  1:  0  2:-32767  3:  0  4:  0  5:-32767  6:  0  7:  0 
-   Buttons:  0:off  1:off  2:off  3:off  4:off  5:off  6:off  7:off  8:off  9:off 10:off 
-   ```
-
-   - left joy - left & right: Axes 0; (left decrease, right: increase) [-32767,32767]
+   Axes:  0:     0  1:     0  2:     0  3:     0  4:     0  5:     0 Buttons:  0:off  1:off  2:off  3:off  4:off  5:off  6:off  7:off  8:off  9:off 10:off 11:off 
+   
+```
+   
+- left joy - left & right: Axes 0; (left decrease, right: increase) [-32767,32767]
 - left joy - up & down: Axes 1; (up: decrease, down: increase) [-32767,32767]
-   - right joy - left & right: Axes 2; (left decrease, right: increase) [-32767,32767]
+- right joy - left & right: Axes 2; (left decrease, right: increase) [-32767,32767]
 - right joy - up & down: Axes 3; (up: decrease, down: increase) [-32767,32767]
-   - A: 0 (on/off)
+- Y: 0
 - B: 1
-   - X: 2
-- Y: 3
-   - LB: 4
+- A: 2 (on/off)
+- X: 3
+- LB: 4
 - RB: 5
-   - LT: 6
+- LT: 6
 - RT: 7
-   - back: 8
+
+
+
+- back: 8
 - start: 9
-   - logo: 10
-- left: 13
-   - right: 14
-- up: 15
-   - down: 16
+- logo: 
+- left: 
+- right: 
+- up: 
+- down: 
 
 ### 1.4 Install tele-operate package
 
@@ -123,10 +144,10 @@ Usage:
 - LB: Disable data collection
 - RB: Enable data collection
 - left and right joy: steering (control angular velocity)
-- X: w-1 gear (set the feasible angular velocity interval into [-0.5, 0.5])
-- A: w-2 gear (set the feasible angular velocity interval into [-1, 1])
-- Y: v-1 gear (set the feasible velocity interval into [0, 0.5])
+- A: v-1 gear (set the feasible velocity interval into [0, 0.5])
 - B: v-2 gear (set the feasible velocity interval into [0.3, 0.8])
+- X: w-1 gear (set the feasible angular velocity interval into [-0.5, 0.5])
+- Y: w-2 gear (set the feasible angular velocity interval into [-1, 1])
 
 ## 3. Nodes
 
