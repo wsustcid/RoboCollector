@@ -2,8 +2,6 @@
 <!--
 - LT(6): Brake
 - RT(7): Throttle
-- LB(4): Disable data collection
-- RB(5): Enable data collection
 - left(0): steering 
 - A(0): v-1 gear (set the feasible velocity interval into [0, 0.5])
 - B(1): v-2 gear (set the feasible velocity interval into [0.3, 0.8])

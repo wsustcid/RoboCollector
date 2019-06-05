@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 '''
-This node is used to control a differential drive mobile robot like a car.
+This node is used to control a differential drive mobile robot like a car. 
+The brake, throttle, steering and gear used in a real car are defined on 
+by the joystick axes and buttons. Then the commands created by the joystick
+are converted to the linear and angular velocity which can be used in a robot.
+
 - LT(6): Brake (decrease current velocity)
 - RT(7): Throttle (increase current velocity)
-- LB(4): Disable data collection
-- RB(5): Enable data collection
 - left(0): steering (control angular velocity)
 - A(2): v-1 gear (set the feasible velocity interval into [0, 0.5])
 - B(1): v-2 gear (set the feasible velocity interval into [0.3, 0.8])
@@ -33,8 +35,8 @@ class TeleopRobot():
         self.Y = rospy.get_param("Y", 0)
         self.LT = rospy.get_param("LT", 6)
         self.RT = rospy.get_param("RT", 7)
-        self.LB = rospy.get_param("LB", 4)
-        self.RB = rospy.get_param("RB", 5)
+        #self.LB = rospy.get_param("LB", 4)
+        #self.RB = rospy.get_param("RB", 5)
         
         # define the amount of change of throttle and brake
         self.throttle_delta = rospy.get_param("~throttle_increment", 0.01)
@@ -59,8 +61,8 @@ class TeleopRobot():
         self.gear_w1_pressed  = False
         self.gear_w2_pressed  = False
 
-        self.disable_data_pressed = False
-        self.enable_data_pressed  = False
+        #self.disable_data_pressed = False
+        #self.enable_data_pressed  = False
         
         # set defalut control msg value
         self.vel = Twist()
@@ -107,12 +109,6 @@ class TeleopRobot():
             self.gear_w2_pressed  = joy.buttons[self.Y]
             if self.gear_w2_pressed:
                 self.gear_w1_pressed = False
-        
-        if not self.disable_data_pressed:
-            self.disable_data_pressed = joy.buttons[self.LB]
-        
-        if not self.enable_data_pressed:
-            self.enable_data_pressed  = joy.buttons[self.RB]
         
         # The amount of brake and throttle change is proportional to the number of times 
         # of LT and RT buttons are pressed.  
