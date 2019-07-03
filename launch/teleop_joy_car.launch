@@ -13,7 +13,7 @@
 <node pkg="joy" type="joy_node" name="joystick"/>
 
 <!-- Start the telop node to control the car-->
-<node pkg="teleop_robot" type="teleop_joy_data.py" name="teleop_robot" output="screen">
+<node pkg="teleop_robot" type="teleop_joy_car.py" name="teleop_robot" output="screen">
   <param name="gear_w1" value="0.5" />
   <remap from="cmd_vel" to="/RosAria/cmd_vel"/>
 </node>
