@@ -5,22 +5,8 @@
 @Author: Shuai Wang
 @Github: https://github.com/wsustcid
 @Date: 2019-11-15 15:27:01
-@LastEditTime: 2019-11-17 22:34:42
+@LastEditTime: 2019-11-18 16:31:40
 '''
-
-"""
-方案1：定速版本，仅预测角度（寻找适用于全程赛道的最佳的速度与角度的匹配）
-  - speed: 
-  - steer: 
-
-方案2：分赛道采集(寻找各赛道的对应最优匹配) - 确保数据均衡
-  赛道1：
-
-后续：
-  1. 增加易失败处数据
-  2. 增加其他赛道数据
-
-"""
 
 # joy
 import rospy

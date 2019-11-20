@@ -8,16 +8,13 @@
 - X(2): w-1 gear (set the feasible angular velocity interval into [-0.5, 0.5])
 - Y(3): w-2 gear (set the feasible angular velocity interval into [-1, 1])
 
-驾驶经验：
-赛道1-3：
-  - speed=23; steer=3: 弯道线处开始转向，1.0左右，控制距弯道线距离
-
-赛道4：
-  - speed=23; steer=15, 换挡->看准拐点，内侧拐入，角度给到底，及时松开
-赛道5：
-  - speed=23; steer=15, 注意使用小角度！4左右
-赛道6-8：
-  - speed=23; steer=3, 换挡->0.4左右，注意连续控制
+驾驶经验总结：
+方案1： 定速行驶 （speed=23）
+  - 赛道1-3: steer=3,  弯道线处开始转向，1.0左右，控制距弯道线距离
+  - 赛道4:   steer=15, 换挡->看准拐点，内侧拐入，角度给到底，及时松开
+                       或者中线拐入，10左右能更好拐入，别拐早了；
+  - 赛道5:   steer=15, 注意使用小角度！4左右
+  - 赛道6-8: steer=3, 换挡->0.4左右，注意连续控制
 
  -->
 <!-- Start the joystick driver to publish the /joy topic -->
@@ -28,12 +25,12 @@
   <param name="gear_v1_min" value="-20.0"/>
   <param name="gear_v1_max" value="23.0"/>
   <param name="gear_w1" value="3.0"/>
-  <param name="gear_v2_min" value="40.0"/>
+  <param name="gear_v2_min" value="30.0"/>
   <param name="gear_v2_max" value="60.0"/>
-  <param name="gear_w2" value="15.0"/>
+  <param name="gear_w2" value="12.0"/>
   <param name="target_ip" value="192.168.1.111"/>
-  <param name="data_path" value="/media/ubuntu16/Documents/datasets/UISEE_SIM/steer"/>
-  <param name="img_count" value="3450" />
+  <param name="data_path" value="/media/ubuntu16/Documents/datasets/UISEE_SIM/test"/>
+  <param name="img_count" value="0" />
   
 </node>
 
