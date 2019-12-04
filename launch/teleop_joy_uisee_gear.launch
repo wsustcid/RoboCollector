@@ -20,17 +20,18 @@
 <!-- Start the joystick driver to publish the /joy topic -->
 <node pkg="joy" type="joy_node" name="joystick"/>
 
+<arg name="target_ip" default="192.168.1.108" />
 <!-- Start the telop node to control the car-->
-<node pkg="teleop_robot" type="teleop_joy_uisee.py" name="teleop_uisee" output="screen">
+<node pkg="teleop_robot" type="teleop_joy_uisee_gear.py" name="teleop_uisee" output="screen">
   <param name="gear_v1_min" value="-20.0"/>
-  <param name="gear_v1_max" value="23.0"/>
-  <param name="gear_w1" value="3.0"/>
+  <param name="gear_v1_max" value="20.0"/>
+  <param name="gear_w1" value="4.0"/>
   <param name="gear_v2_min" value="30.0"/>
   <param name="gear_v2_max" value="60.0"/>
-  <param name="gear_w2" value="12.0"/>
-  <param name="target_ip" value="192.168.1.111"/>
-  <param name="data_path" value="/media/ubuntu16/Documents/datasets/UISEE_SIM/test"/>
-  <param name="img_count" value="0" />
+  <param name="gear_w2" value="10.0"/>
+  <param name="target_ip" value="$(arg target_ip)"/>
+  <param name="data_path" value="/media/ubuntu16/Documents/datasets/UISEE_SIM/steer"/>
+  <param name="img_count" value="11970" />
   
 </node>
 
