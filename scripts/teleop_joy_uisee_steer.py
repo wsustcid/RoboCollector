@@ -5,7 +5,7 @@
 @Author: Shuai Wang
 @Github: https://github.com/wsustcid
 @Date: 2019-12-04 09:56:50
-@LastEditTime: 2019-12-06 11:22:35
+@LastEditTime: 2019-12-09 19:56:24
 '''
 
 # joy
@@ -44,6 +44,7 @@ class UiseeDriver():
 
     Best turn:
       speed = 25; steer = 8
+
     """
 
     def __init__(self):
@@ -147,7 +148,7 @@ class UiseeDriver():
             if self.gear_w3_pressed:
                 self.gear_w1_pressed = False
                 self.gear_w2_pressed = False
-
+        ''' V1: 按下采集，再次按下停止采集
         if self.data_flag and joy.buttons[self.RB]:
             self.data_flag = False
         elif not self.data_flag and joy.buttons[self.RB]:
@@ -159,7 +160,42 @@ class UiseeDriver():
             self.Q_steer = Queue(self.num_frames)
             self.Q_speed = Queue(self.num_frames)  
         else:
-            pass          
+            pass       
+        '''
+        """ V2：始终按下且有转向时开始采集：
+        1. 按下数据采集键(不松开)，不立马开始采集，转向不为0时才开始采集，
+           - 防止收集急转弯处往障碍上撞的数据，让算法误认为是指令，这样提速时可能反应不过来
+        2. 松开数据采集键，停止采集
+
+        if not self.data_flag and joy.buttons[self.RB] and self.steer!=0:
+            self.data_flag = True
+            # restart img id
+            self.start_id = self.count
+
+            # clear queue
+            self.Q_steer = Queue(self.num_frames)
+            self.Q_speed = Queue(self.num_frames)
+        elif self.data_flag and not joy.buttons[self.RB]:
+            self.data_flag = False  
+        else:
+            pass           
+        """
+
+        """ V3: 按住采集，松开停止
+        用于收集低速状态下的避障数据
+        """
+        if not self.data_flag and joy.buttons[self.RB]:
+            self.data_flag = True
+            # restart img id
+            self.start_id = self.count
+
+            # clear queue
+            self.Q_steer = Queue(self.num_frames)
+            self.Q_speed = Queue(self.num_frames)
+        elif self.data_flag and not joy.buttons[self.RB]:
+            self.data_flag = False  
+        else:
+            pass           
         
     
     def joy_to_cmd(self):

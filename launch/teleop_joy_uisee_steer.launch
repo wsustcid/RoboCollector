@@ -23,17 +23,17 @@
 <!-- Start the telop node to control the car-->
 <node pkg="teleop_robot" type="teleop_joy_uisee_steer.py" name="teleop_uisee" output="screen">
   <param name="v_delta" value="10.0"/>
-  <param name="v_c" value="30.0" />
+  <param name="v_c" value="20.0" />
   <param name="s_turn" value="2.0"/>
-  <param name="v_min" value="13.0"/>
-  <param name="v_max" value="38.0"/>
-  <param name="gear_w1" value="3.0"/>
+  <param name="v_min" value="10.0"/>
+  <param name="v_max" value="25.0"/>
+  <param name="gear_w1" value="5.0"/>
   <param name="gear_w2" value="10.0"/>
-  <param name="gear_w3" value="4.5"/>
+  <param name="gear_w3" value="8.0"/>
   <param name="target_ip" value="192.168.1.108"/>
   <param name="data_path" value="/home/ubuntu16/Datasets/UISEE_SIM/I"/>
   <param name="num_frames" value="11" />
-  <param name="img_count" value="6671" />
+  <param name="img_count" value="10388" />
 
 
   
