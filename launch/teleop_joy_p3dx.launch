@@ -1,0 +1,34 @@
+<launch>
+<!--
+Usage:
+- LT(6): Brake
+- RT(7): Throttle
+- left(0): steering 
+- A(0): v-1 gear (set the feasible velocity interval into [0, 0.5])
+- B(1): v-2 gear (set the feasible velocity interval into [0.3, 0.8])
+- X(2): w-1 gear (set the feasible angular velocity interval into [-0.5, 0.5])
+- Y(3): w-2 gear (set the feasible angular velocity interval into [-1, 1])
+
+- LB(4): Disable data collection
+- RB(5): Enable data collection
+ -->
+
+
+  <!-- Start robot driver (Simulator or a real robot should be start first) -->
+  <node pkg="rosaria" type="RosAria" name="RosAria" output="screen"/>
+
+  <!-- Start the joystick driver to publish the /joy topic -->
+  <node pkg="joy" type="joy_node" name="joystick" output="screen"/>
+
+  <!-- Start the telop node to control the car-->
+  <node pkg="teleop_robot" type="teleop_joy_p3dx.py" name="teleop_p3dx" output="screen">
+    <param name="gear_w1" value="0.5" />
+    <remap from="cmd_vel" to="/RosAria/cmd_vel"/>
+    <param name="dataset_path" value="/media/ubuntu16/Documents/datasets/Sonar/SIM/test/" />
+    <param name="csv_name_1"  value="2019-12-31-1.csv" />
+    <param name="csv_name_16" value="2019-12-31-16.csv" />
+    <param name="csv_name_32" value="2019-12-31-32.csv" />
+    <param name="csv_name_48" value="2019-12-31-48.csv" />
+  </node>
+
+</launch>
